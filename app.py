@@ -44,6 +44,11 @@ detector = PromptInjectionDetector()
 def is_prompt_injection_attack(text: str) -> bool:
     """
     Returns True if the text contains a prompt injection attack, False otherwise.
+    Parameters:
+    text (str): The text to check for prompt injection attacks.
+
+    Returns:
+    bool: True if the text contains a prompt injection attack, False otherwise.
     """
     return detector.is_prompt_injection_attack(text)
 
@@ -64,7 +69,7 @@ async def generate_code(request: CodeRequest):
             "input": f"Code snippet language: {request.language}\nCode snippet description: {request.description}"
         }
     )["output"]
-    
+
     print(f"Response: {response}")
 
     code = get_code_from_response(response)
@@ -97,14 +102,14 @@ async def generate_tests(request: TestRequest):
     prompt = generate_tests_prompt()
 
     agent = get_agent_with_prompt(prompt=prompt, llm=llm, tools=tools)
-    
+
     response = agent.invoke(
         {
             "input": f"Code snippet language: {request.language}\nCode snippet description: {request.code}"
         }
     )["output"]
     tests = get_code_from_response(response)
-    
+
     print(f"Response: {response}")
     snippet_id = str(uuid.uuid4())
     snippets.setdefault(snippet_id, {})
@@ -121,7 +126,7 @@ async def provide_test_feedback(request: FeedbackRequest):
             "input": f"Code snippet language: {request.language}\nCode snippet description: {request.code}\nFeedback: {request.feedback}"
         }
     )["output"]
-    
+
     print(f"Response: {response}")
     improved_tests = get_code_from_response(response)
     return {"tests": improved_tests}
@@ -132,7 +137,7 @@ async def run_tests(request: RunTestRequest):
     if request.language.lower() == "python":
         try:
             result = evaluate_code(request.code + "\n" + request.tests)
-            return {"results": result, "success": True}
+            return {"results": str(result), "success": True}
         except Exception as e:
             return {"results": str(e), "success": False}
     else:

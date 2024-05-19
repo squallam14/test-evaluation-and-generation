@@ -49,19 +49,11 @@ def improve_code_based_on_tests_prompt() -> str:
 
 
 class PromptInjectionDetector:
-    def __init__(self):
-        self.tokenizer = AutoTokenizer.from_pretrained(
-            "ProtectAI/deberta-v3-base-prompt-injection"
-        )
-
-        self.model = AutoModelForSequenceClassification.from_pretrained(
-            "ProtectAI/deberta-v3-base-prompt-injection"
-        )
-
+    def __init__(self, model_path: str = "resources/models/prompt-injection-detector"):
         self.classifier = pipeline(
             "text-classification",
-            model=self.model,
-            tokenizer=self.tokenizer,
+            model=model_path,
+            tokenizer=model_path,
             truncation=True,
             max_length=512,
             device=torch.device("cuda" if torch.cuda.is_available() else "cpu"),
