@@ -1,0 +1,33 @@
+[tool.poetry]
+name = "ai-engineer-assignment-main"
+version = "0.1.0"
+description = ""
+authors = ["Your Name <you@example.com>"]
+readme = "README.md"
+packages = [{include = "ai_engineer_assignment_main"}]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+langchain = "*"
+langchain-community = "*"
+langchainhub = "*"
+langchain-openai = "*"
+openai = "*"
+fastapi = "*"
+black = {extras = ["jupyter"], version = "^24.4.2"}
+restrictedpython = "*"
+pylint = "*"
+bandit = "*"
+python-dotenv = "*"
+transformers = "*"
+optimum = {extras = ["onnxruntime"], version = "^1.19.2"}
+langchain-experimental = "*"
+
+
+[tool.poetry.group.dev.dependencies]
+jupyter = "*"
+black = {extras = ["jupyter"], version = "^24.4.2"}
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
